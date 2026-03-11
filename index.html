@@ -1,571 +1,275 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>بطولة كأس منصور بن زايد 2026</title>
-  <link rel="icon" type="image/png" href="assets/img/logo-tournament.png">
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#0b1f3a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="كأس منصور">
-  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بطولة كأس منصور بن زايد 2026</title>
 
-  <style>
-    .home-wrap{
-      max-width:1280px;
-      margin:0 auto;
-      padding:18px 16px 40px;
-    }
+<link rel="stylesheet" href="assets/css/style.css">
 
-    .section-card{
-      background:linear-gradient(180deg, rgba(12,30,58,.96), rgba(8,23,44,.96));
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:24px;
-      box-shadow:0 12px 34px rgba(0,0,0,.24);
-      overflow:hidden;
-      margin-bottom:24px;
-    }
+<style>
 
-    .section-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:18px 22px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background:linear-gradient(90deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-    }
+.main-container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
 
-    .section-head h2{
-      margin:0;
-      font-size:2rem;
-      color:#fff;
-    }
+.hero{
+text-align:center;
+margin-bottom:30px;
+}
 
-    .section-sub{
-      color:rgba(255,255,255,.72);
-      font-size:.98rem;
-    }
+.hero h1{
+font-size:34px;
+margin-bottom:10px;
+}
 
-    .news-box{
-      padding:20px;
-    }
+.hero p{
+opacity:.8;
+}
 
-    .news-accordion{
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-    }
+.grid-two{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
 
-    .news-accordion-header{
-      width:100%;
-      background:linear-gradient(135deg,#1e4f97,#0d2f5d);
-      color:#fff;
-      border:none;
-      padding:20px 22px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      font-size:1.55rem;
-      font-weight:800;
-      cursor:pointer;
-    }
+@media(max-width:768px){
+.grid-two{
+grid-template-columns:1fr;
+}
+}
 
-    .news-accordion-header span{
-      font-size:1rem;
-      font-weight:600;
-      color:rgba(255,255,255,.86);
-    }
+.card{
+background:rgba(255,255,255,.05);
+padding:20px;
+border-radius:10px;
+}
 
-    .news-accordion-body{
-      display:block;
-      padding:18px;
-    }
+.groups .group{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px;
+margin-bottom:10px;
+border-radius:8px;
+font-weight:bold;
+}
 
-    .news-list{
-      display:grid;
-      gap:14px;
-    }
+.groupA{background:#1f8a55;}
+.groupB{background:#b53a3a;}
+.groupC{background:#3a6bb5;}
+.groupD{background:#b59b3a;}
 
-    .news-row{
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap:14px;
-      align-items:center;
-      padding:16px;
-      border-radius:16px;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.06);
-    }
+.group span{
+font-size:20px;
+}
 
-    .news-info h3{
-      margin:0 0 6px;
-      font-size:1.18rem;
-      color:#fff;
-      line-height:1.5;
-    }
+.group a{
+color:white;
+text-decoration:none;
+font-size:14px;
+}
 
-    .news-info p{
-      margin:0;
-      color:rgba(255,255,255,.72);
-      line-height:1.8;
-      font-size:.96rem;
-    }
+.news-item{
+margin-bottom:15px;
+padding:10px;
+border-bottom:1px solid rgba(255,255,255,.1);
+}
 
-    .btn-home{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      color:#fff;
-      background:linear-gradient(180deg, #123b70, #0c2c56);
-      border:1px solid rgba(255,255,255,.15);
-      border-radius:12px;
-      padding:10px 16px;
-      font-weight:700;
-      transition:.2s ease;
-      white-space:nowrap;
-    }
+.news-item button{
+margin-top:8px;
+padding:6px 12px;
+border:none;
+border-radius:6px;
+background:#2b6cb0;
+color:white;
+cursor:pointer;
+}
 
-    .btn-home:hover{
-      transform:translateY(-1px);
-      filter:brightness(1.08);
-    }
+.video-section{
+margin-top:40px;
+text-align:center;
+}
 
-    .videos-grid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:16px;
-      padding:20px;
-    }
+.video-section iframe{
+width:100%;
+max-width:800px;
+height:420px;
+border:none;
+border-radius:10px;
+}
 
-    .video-card{
-      border-radius:20px;
-      overflow:hidden;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:0 8px 26px rgba(0,0,0,.18);
-    }
+.gallery{
+margin-top:40px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
 
-    .video-thumb{
-      position:relative;
-      aspect-ratio:16/9;
-      overflow:hidden;
-      background:linear-gradient(135deg, rgba(39,105,180,.35), rgba(8,30,59,.7));
-    }
+.gallery img{
+width:100%;
+border-radius:10px;
+}
 
-    .video-thumb img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
+.social{
+margin-top:30px;
+text-align:center;
+}
 
-    .video-play{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:radial-gradient(circle, rgba(255,255,255,.12), transparent 30%);
-      font-size:3rem;
-      color:#fff;
-      text-shadow:0 4px 18px rgba(0,0,0,.45);
-    }
+.social img{
+width:40px;
+margin:0 10px;
+cursor:pointer;
+}
 
-    .video-body{
-      padding:16px;
-    }
+</style>
 
-    .video-body h3{
-      margin:0 0 8px;
-      color:#fff;
-      font-size:1.18rem;
-      line-height:1.5;
-      min-height:3.2em;
-    }
-
-    .video-body p{
-      margin:0 0 14px;
-      color:rgba(255,255,255,.78);
-      line-height:1.8;
-      min-height:3.6em;
-    }
-
-    .gallery-grid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:16px;
-      padding:20px;
-    }
-
-    .gallery-card{
-      border-radius:20px;
-      overflow:hidden;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:0 8px 26px rgba(0,0,0,.18);
-    }
-
-    .gallery-card img{
-      width:100%;
-      aspect-ratio:16/10;
-      object-fit:cover;
-      display:block;
-      background:linear-gradient(135deg, rgba(39,105,180,.35), rgba(8,30,59,.7));
-    }
-
-    .gallery-body{
-      padding:14px 16px;
-    }
-
-    .gallery-body h3{
-      margin:0 0 6px;
-      color:#fff;
-      font-size:1.12rem;
-    }
-
-    .gallery-body p{
-      margin:0;
-      color:rgba(255,255,255,.72);
-      line-height:1.7;
-      font-size:.95rem;
-    }
-
-    .social-wrap{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:18px;
-      flex-wrap:wrap;
-      padding:24px 20px 10px;
-    }
-
-    .social-icon-link{
-      width:82px;
-      height:82px;
-      border-radius:22px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      color:#fff;
-      font-size:2.2rem;
-      border:1px solid rgba(255,255,255,.16);
-      box-shadow:0 10px 26px rgba(0,0,0,.22);
-      transition:.2s ease;
-    }
-
-    .social-icon-link:hover{
-      transform:translateY(-2px) scale(1.04);
-      filter:brightness(1.06);
-    }
-
-    .insta{
-      background:linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-    }
-
-    .youtube{
-      background:linear-gradient(135deg, #ff2e2e, #b30000);
-    }
-
-    .social-note{
-      text-align:center;
-      color:rgba(255,255,255,.78);
-      padding:0 20px 24px;
-      font-size:1rem;
-    }
-
-    @media (max-width:1100px){
-      .videos-grid,
-      .gallery-grid{
-        grid-template-columns:1fr 1fr;
-      }
-    }
-
-    @media (max-width:760px){
-      .section-head{
-        padding:16px;
-      }
-
-      .section-head h2{
-        font-size:1.55rem;
-      }
-
-      .section-sub{
-        display:none;
-      }
-
-      .home-wrap{
-        padding:12px 10px 28px;
-      }
-
-      .news-accordion-header{
-        font-size:1.25rem;
-        padding:16px;
-      }
-
-      .news-accordion-header span{
-        font-size:.9rem;
-      }
-
-      .news-row{
-        grid-template-columns:1fr;
-        align-items:start;
-      }
-
-      .videos-grid,
-      .gallery-grid{
-        grid-template-columns:1fr;
-      }
-
-      .video-body h3,
-      .video-body p{
-        min-height:auto;
-      }
-
-      .social-icon-link{
-        width:74px;
-        height:74px;
-        border-radius:20px;
-      }
-    }
-  </style>
 </head>
 
 <body>
-<header class="topbar">
-  <div class="topbar-logos">
-    <img class="logo" src="assets/img/logo-committee-white.png" alt="شعار اللجنة" />
-  </div>
-  <div class="brand">
-    <div class="brand-title">بطولة كأس منصور بن زايد 2026</div>
-  </div>
-  <div class="topbar-logos">
-    <img class="logo" src="assets/img/logo-cup-white.png" alt="شعار البطولة" />
-  </div>
-  <nav class="nav">
-    <a class="nav-link" href="index.html">الرئيسية</a>
-    <a class="nav-link" href="group.html?g=A">المجموعة A</a>
-    <a class="nav-link" href="group.html?g=B">المجموعة B</a>
-    <a class="nav-link" href="group.html?g=C">المجموعة C</a>
-    <a class="nav-link" href="group.html?g=D">المجموعة D</a>
-    <a class="nav-link" href="groups_all.html">ترتيب جميع المجموعات</a>
-    <a class="nav-link" href="awards.html">الجوائز الفردية</a>
-    <a class="nav-link" href="stats.html">الإحصائيات</a>
-    <a class="nav-link" href="knockout.html">الأدوار النهائية</a>
-  </nav>
+
+
+<header class="site-header">
+
+<div class="header-inner">
+<h1 class="site-title">بطولة كأس منصور بن زايد 2026</h1>
+</div>
+
+<nav class="nav">
+
+<a class="nav-link" href="index.html">الرئيسية</a>
+<a class="nav-link" href="group.html?g=A">المجموعة A</a>
+<a class="nav-link" href="group.html?g=B">المجموعة B</a>
+<a class="nav-link" href="group.html?g=C">المجموعة C</a>
+<a class="nav-link" href="group.html?g=D">المجموعة D</a>
+<a class="nav-link" href="groups_all.html">ترتيب جميع المجموعات</a>
+<a class="nav-link" href="awards.html">الجوائز الفردية</a>
+<a class="nav-link" href="stats.html">الإحصائيات</a>
+<a class="nav-link" href="knockout.html">الأدوار النهائية</a>
+
+</nav>
+
 </header>
 
-<main class="home-wrap">
-  <section class="hero" aria-label="صورة البطولة">
-    <img class="hero-bg" src="assets/img/bg-hero.jpg" alt="" />
-    <img class="hero-logo hero-logo-left" src="assets/img/logo-committee-white.png" alt="" />
-    <img class="hero-logo hero-logo-center" src="assets/img/logo-tournament.png" alt="شعار البطولة" />
-    <img class="hero-logo hero-logo-right" src="assets/img/logo-cup-white.png" alt="" />
-    <div class="hero-card">
-      <h1>بطولة كأس منصور بن زايد 2026</h1>
-      <p class="muted hero-desc">النسخة الثالثة عشر من البطولة، التي تُلعب على مدار 20 يوماً، وتتكون البطولة من 16 فريقاً و240 لاعباً و32 مباراة.</p>
-      <div class="btn-row">
-        <a class="btn btn-ga" href="group.html?g=A">عرض المجموعة A</a>
-        <a class="btn btn-gb" href="group.html?g=B">عرض المجموعة B</a>
-        <a class="btn btn-gc" href="group.html?g=C">عرض المجموعة C</a>
-        <a class="btn btn-gd" href="group.html?g=D">عرض المجموعة D</a>
-      </div>
-    </div>
-  </section>
 
-  <section class="section-card">
-    <div class="section-head">
-      <h2>نشرة البطولة</h2>
-      <div class="section-sub">تغطية مرتبة زمنيًا من الأقدم إلى الأحدث</div>
-    </div>
+<div class="main-container">
 
-    <div class="news-box">
-      <div class="news-accordion">
-        <button class="news-accordion-header" type="button" onclick="toggleNews()">
-          <span>قائمة النشرات الرسمية للبطولة</span>
-          <strong>نشرة البطولة</strong>
-        </button>
 
-        <div class="news-accordion-body" id="newsBody">
-          <div class="news-list">
-            <div class="news-row">
-              <div class="news-info">
-                <h3>بداية النسخة 13 من بطولة كأس منصور بن زايد لكرة القدم</h3>
-                <p>النشرة الأولى – تمهيد لربط ملفات PDF الرسمية لاحقًا من الأقدم إلى الأحدث.</p>
-              </div>
-              <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
-            </div>
+<div class="hero">
 
-            <div class="news-row">
-              <div class="news-info">
-                <h3>متابعة فعاليات البطولة يوماً بعد يوم</h3>
-                <p>ستُعرض النشرات النهائية داخل هذا الصندوق بشكل مرتب ومختصر دون إطالة في الصفحة.</p>
-              </div>
-              <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
-            </div>
+<h1>بطولة كأس منصور بن زايد 2026</h1>
 
-            <div class="news-row">
-              <div class="news-info">
-                <h3>ختام البطولة وأبرز المحطات</h3>
-                <p>هذا الشكل معتمد لتجنب كثرة البطاقات والحفاظ على جمال الصفحة الرئيسية خصوصًا في الهاتف.</p>
-              </div>
-              <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<p>
+النسخة الثالثة عشرة من البطولة التي شارك فيها 16 فريقاً
+و240 لاعباً على مدار 32 مباراة
+</p>
 
-  <section class="section-card">
-    <div class="section-head">
-      <h2>أبرز الفيديوهات</h2>
-      <div class="section-sub">روابط مباشرة لأهم الفيديوهات الرسمية للبطولة</div>
-    </div>
+</div>
 
-    <div class="videos-grid">
-      <article class="video-card">
-        <div class="video-thumb">
-          <img src="assets/img/bg-hero.jpg" alt="المؤتمر الصحفي" />
-          <div class="video-play">▶</div>
-        </div>
-        <div class="video-body">
-          <h3>المؤتمر الصحفي للإعلان عن النسخة 13 من كأس منصور بن زايد</h3>
-          <p>إطلاق البطولة رسميًا والإعلان عن تفاصيل النسخة الثالثة عشرة.</p>
-          <a class="btn-home" href="https://youtu.be/AZ3hvX2xNes?si=El0N1BoIzGRKLskm" target="_blank" rel="noopener">مشاهدة الفيديو</a>
-        </div>
-      </article>
 
-      <article class="video-card">
-        <div class="video-thumb">
-          <img src="assets/img/bg-hero.jpg" alt="زيارة الشيخ منصور" />
-          <div class="video-play">▶</div>
-        </div>
-        <div class="video-body">
-          <h3>زيارة الشيخ منصور</h3>
-          <p>منصور بن زايد يشهد منافسات ثالث جولات البطولة في تغطية خاصة.</p>
-          <a class="btn-home" href="https://youtu.be/1fD9tHCz48s?si=k6msmYE9QtIzf41o" target="_blank" rel="noopener">مشاهدة الفيديو</a>
-        </div>
-      </article>
+<div class="grid-two">
 
-      <article class="video-card">
-        <div class="video-thumb">
-          <img src="assets/img/bg-hero.jpg" alt="ملخص النهائي" />
-          <div class="video-play">▶</div>
-        </div>
-        <div class="video-body">
-          <h3>ملخص المباراة النهائية</h3>
-          <p>أبرز لقطات اليوم السادس عشر وختام النسخة 13 من البطولة.</p>
-          <a class="btn-home" href="https://youtu.be/1fD9tHCz48s?si=k6msmYE9QtIzf41o" target="_blank" rel="noopener">مشاهدة الفيديو</a>
-        </div>
-      </article>
-    </div>
-  </section>
 
-  <section class="section-card">
-    <div class="section-head">
-      <h2>معرض صور البطولة</h2>
-      <div class="section-sub">واجهة أنيقة للصور المختارة من فعاليات البطولة</div>
-    </div>
+<div class="card groups">
 
-    <div class="gallery-grid">
-      <article class="gallery-card">
-        <img src="assets/img/bg-hero.jpg" alt="زيارة الشيخ منصور" />
-        <div class="gallery-body">
-          <h3>زيارة الشيخ منصور</h3>
-          <p>مكان مخصص للصورة الأولى من الزيارة الرسمية.</p>
-        </div>
-      </article>
+<h2>المجموعات</h2>
 
-      <article class="gallery-card">
-        <img src="assets/img/bg-hero.jpg" alt="حفل الافتتاح" />
-        <div class="gallery-body">
-          <h3>حفل الافتتاح</h3>
-          <p>مكان مخصص لصورة من أجواء الافتتاح.</p>
-        </div>
-      </article>
+<div class="group groupA">
+<span>A</span>
+<a href="group.html?g=A">تفاصيل المجموعة ومبارياتها</a>
+</div>
 
-      <article class="gallery-card">
-        <img src="assets/img/bg-hero.jpg" alt="التفاعل الجماهيري" />
-        <div class="gallery-body">
-          <h3>المدرجات والتفاعل الجماهيري</h3>
-          <p>مكان مخصص لصورة من التفاعل الجماهيري.</p>
-        </div>
-      </article>
+<div class="group groupB">
+<span>B</span>
+<a href="group.html?g=B">تفاصيل المجموعة ومبارياتها</a>
+</div>
 
-      <article class="gallery-card">
-        <img src="assets/img/bg-hero.jpg" alt="لقطات من المنافسات" />
-        <div class="gallery-body">
-          <h3>لقطات من المنافسات</h3>
-          <p>مكان مخصص لصورة من داخل الملعب.</p>
-        </div>
-      </article>
+<div class="group groupC">
+<span>C</span>
+<a href="group.html?g=C">تفاصيل المجموعة ومبارياتها</a>
+</div>
 
-      <article class="gallery-card">
-        <img src="assets/img/bg-hero.jpg" alt="نهاية البطولة" />
-        <div class="gallery-body">
-          <h3>نهاية البطولة</h3>
-          <p>مكان مخصص لصورة من الختام أو التتويج.</p>
-        </div>
-      </article>
+<div class="group groupD">
+<span>D</span>
+<a href="group.html?g=D">تفاصيل المجموعة ومبارياتها</a>
+</div>
 
-      <article class="gallery-card">
-        <img src="assets/img/bg-hero.jpg" alt="صورة إضافية" />
-        <div class="gallery-body">
-          <h3>صورة إضافية من البطولة</h3>
-          <p>مكان مخصص لأي لقطة مهمة إضافية.</p>
-        </div>
-      </article>
-    </div>
-  </section>
+</div>
 
-  <section class="section-card">
-    <div class="section-head">
-      <h2>تابع البطولة عبر منصات ديوان سبورت</h2>
-      <div class="section-sub">اضغط على الأيقونة للانتقال المباشر دون إظهار الروابط</div>
-    </div>
 
-    <div class="social-wrap">
-      <a class="social-icon-link insta" href="https://www.instagram.com/diwan_sports_uae?igsh=MXVsN3ZvYmQycTY4aQ==" target="_blank" rel="noopener" aria-label="Instagram">
-        ⌾
-      </a>
+<div class="card">
 
-      <a class="social-icon-link youtube" href="https://youtube.com/@diwansports?si=8bpMInOo8_YiW5Le" target="_blank" rel="noopener" aria-label="YouTube">
-        ▶
-      </a>
-    </div>
+<h2>نشرة البطولة</h2>
 
-    <div class="social-note">
-      متابعة البطولة على الإنستغرام واليوتيوب عبر حساب ديوان سبورت
-    </div>
-  </section>
-</main>
+<div class="news-item">
+بداية النسخة 13 من بطولة كأس منصور بن زايد
+<br>
+<button>قراءة النشرة</button>
+</div>
 
-<footer class="footer">
-  © بطولة كأس منصور بن زايد 2026 — GitHub Pages
+<div class="news-item">
+متابعة فعاليات البطولة يوماً بعد يوم
+<br>
+<button>قراءة النشرة</button>
+</div>
+
+<div class="news-item">
+ختام البطولة وأبرز المحطات
+<br>
+<button>قراءة النشرة</button>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="video-section">
+
+<h2>زيارة الشيخ منصور</h2>
+
+<iframe src="https://www.youtube.com/embed/VIDEOID"></iframe>
+
+</div>
+
+
+<div class="gallery">
+
+<img src="assets/img/photo1.jpg">
+<img src="assets/img/photo2.jpg">
+<img src="assets/img/photo3.jpg">
+<img src="assets/img/photo4.jpg">
+
+</div>
+
+
+<div class="social">
+
+<a href="https://www.instagram.com/diwan_sports_uae" target="_blank">
+<img src="assets/img/instagram.png">
+</a>
+
+<a href="https://youtube.com/@diwansports" target="_blank">
+<img src="assets/img/youtube.png">
+</a>
+
+</div>
+
+
+</div>
+
+
+<footer class="site-footer">
+
+<div class="footer-inner">
+© بطولة كأس منصور بن زايد 2026
+</div>
+
 </footer>
 
-<script>
-  function toggleNews(){
-    const body = document.getElementById("newsBody");
-    if(!body) return;
-    body.style.display = (body.style.display === "none") ? "block" : "none";
-  }
 
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("service-worker.js")
-        .then(function () { console.log("PWA ready"); })
-        .catch(function (err) { console.error("SW registration failed:", err); });
-    });
-  }
-</script>
 </body>
 </html>
