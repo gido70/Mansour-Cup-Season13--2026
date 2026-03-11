@@ -100,7 +100,7 @@
       grid-template-columns:1fr auto;
       gap:12px;
       align-items:center;
-      padding:16px;
+      padding:18px;
       border-radius:14px;
       background:rgba(255,255,255,.03);
       border:1px solid rgba(255,255,255,.06);
@@ -110,7 +110,7 @@
       margin:0 0 6px;
       color:#fff;
       font-size:1.22rem;
-      line-height:1.6;
+      line-height:1.8;
       text-align:center;
     }
 
@@ -120,6 +120,7 @@
       line-height:1.9;
       font-size:1rem;
       text-align:center;
+      min-height:1.2em;
     }
 
     .btn-home{
@@ -151,9 +152,12 @@
 
     .groups-box h3{
       margin:0 0 16px;
+      padding:16px;
+      background:linear-gradient(135deg,#1e4f97,#0d2f5d);
       color:#fff;
-      font-size:2rem;
+      font-size:1.6rem;
       text-align:center;
+      border-radius:12px;
       line-height:1.2;
     }
 
@@ -173,6 +177,12 @@
       text-decoration:none;
       font-weight:800;
       box-shadow:0 8px 22px rgba(0,0,0,.16);
+      transition:transform .2s ease, filter .2s ease;
+    }
+
+    .group-card:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.04);
     }
 
     .group-card small{
@@ -234,6 +244,12 @@
       position:relative;
     }
 
+    .video-thumb img{
+      width:120px;
+      opacity:.9;
+      filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));
+    }
+
     .video-thumb::after{
       content:"▶";
       position:absolute;
@@ -244,6 +260,7 @@
       color:#fff;
       font-size:3rem;
       text-shadow:0 4px 18px rgba(0,0,0,.45);
+      pointer-events:none;
     }
 
     .video-body{
@@ -479,8 +496,8 @@
           <div class="news-list">
             <div class="news-row">
               <div class="news-info">
-                <h3>بداية النسخة 13 من بطولة كأس منصور بن زايد لكرة القدم</h3>
-                <p>النشرة الأولى</p>
+                <h3>النشرة الأولى</h3>
+                <p></p>
               </div>
               <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
             </div>
@@ -513,7 +530,9 @@
 
     <div class="videos-grid">
       <article class="video-card">
-        <div class="video-thumb"></div>
+        <div class="video-thumb">
+          <img src="assets/img/logo-tournament.png" alt="شعار البطولة">
+        </div>
         <div class="video-body">
           <h3>المؤتمر الصحفي للإعلان عن النسخة 13 من كأس منصور بن زايد</h3>
           <p>إطلاق البطولة رسميًا والإعلان عن تفاصيل النسخة الثالثة عشرة.</p>
@@ -522,7 +541,9 @@
       </article>
 
       <article class="video-card">
-        <div class="video-thumb"></div>
+        <div class="video-thumb">
+          <img src="assets/img/logo-tournament.png" alt="شعار البطولة">
+        </div>
         <div class="video-body">
           <h3>زيارة الشيخ منصور</h3>
           <p>منصور بن زايد يشهد منافسات ثالث جولات البطولة في تغطية خاصة.</p>
@@ -531,10 +552,12 @@
       </article>
 
       <article class="video-card">
-        <div class="video-thumb"></div>
+        <div class="video-thumb">
+          <img src="assets/img/logo-tournament.png" alt="شعار البطولة">
+        </div>
         <div class="video-body">
           <h3>ملخص المباراة النهائية</h3>
-          <p>أضف رابط النهائي الصحيح هنا عند توفره لتجنب تكرار فيديو الشيخ منصور.</p>
+          <p>ضع رابط النهائي الصحيح هنا عند توفره.</p>
           <a class="btn-home" href="#" onclick="return false;">مشاهدة الفيديو</a>
         </div>
       </article>
