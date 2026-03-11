@@ -73,7 +73,7 @@
     .news-accordion-header{
       width:100%;
       border:none;
-      cursor:pointer;
+      cursor:default;
       color:#fff;
       background:linear-gradient(135deg,#1e4f97,#0d2f5d);
       padding:18px 20px;
@@ -100,6 +100,7 @@
       grid-template-columns:1fr auto;
       gap:12px;
       align-items:center;
+      min-height:106px;
       padding:18px;
       border-radius:14px;
       background:rgba(255,255,255,.03);
@@ -172,6 +173,7 @@
       align-items:center;
       justify-content:space-between;
       gap:14px;
+      min-height:106px;
       border-radius:16px;
       padding:14px 16px;
       color:#fff;
@@ -250,6 +252,7 @@
       width:120px;
       opacity:.9;
       filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));
+      z-index:1;
     }
 
     .video-thumb::after{
@@ -263,6 +266,7 @@
       font-size:3rem;
       text-shadow:0 4px 18px rgba(0,0,0,.45);
       pointer-events:none;
+      z-index:2;
     }
 
     .video-thumb-photo img{
@@ -357,6 +361,22 @@
       color:rgba(255,255,255,.78);
       line-height:1.7;
       font-size:.95rem;
+    }
+
+    .playstation-card{
+      background:linear-gradient(135deg,#2b1f6d,#1b3c7a);
+      border:1px solid rgba(255,255,255,.08);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    .ps-icon{
+      font-size:50px;
+      margin-bottom:10px;
+      filter:drop-shadow(0 4px 12px rgba(0,0,0,.6));
     }
 
     .social-wrap{
@@ -598,6 +618,62 @@
                 </div>
                 <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
               </div>
+
+              <div class="news-row">
+                <div class="news-info">
+                  <h3>العدد التاسع</h3>
+                  <p>مكان مخصص لبقية النشرات</p>
+                </div>
+                <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
+              </div>
+
+              <div class="news-row">
+                <div class="news-info">
+                  <h3>العدد العاشر</h3>
+                  <p>مكان مخصص لبقية النشرات</p>
+                </div>
+                <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
+              </div>
+
+              <div class="news-row">
+                <div class="news-info">
+                  <h3>العدد الحادي عشر</h3>
+                  <p>مكان مخصص لبقية النشرات</p>
+                </div>
+                <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
+              </div>
+
+              <div class="news-row">
+                <div class="news-info">
+                  <h3>العدد الثاني عشر</h3>
+                  <p>مكان مخصص لبقية النشرات</p>
+                </div>
+                <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
+              </div>
+
+              <div class="news-row">
+                <div class="news-info">
+                  <h3>العدد الثالث عشر</h3>
+                  <p>مكان مخصص لبقية النشرات</p>
+                </div>
+                <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
+              </div>
+
+              <div class="news-row">
+                <div class="news-info">
+                  <h3>العدد الرابع عشر</h3>
+                  <p>مكان مخصص لبقية النشرات</p>
+                </div>
+                <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
+              </div>
+
+              <div class="news-row">
+                <div class="news-info">
+                  <h3>العدد الخامس عشر</h3>
+                  <p>مكان مخصص لبقية النشرات</p>
+                </div>
+                <a class="btn-home" href="#" onclick="return false;">قراءة النشرة</a>
+              </div>
             </div>
 
             <div style="text-align:center; margin-top:12px;">
@@ -622,9 +698,9 @@
           <img src="assets/img/logo-tournament.png" alt="شعار البطولة">
         </div>
         <div class="video-body">
-          <h3>المؤتمر الصحفي للإعلان عن النسخة 13 من كأس منصور بن زايد</h3>
-          <p>إطلاق البطولة رسميًا والإعلان عن تفاصيل النسخة الثالثة عشرة.</p>
-          <a class="btn-home" href="https://youtu.be/AZ3hvX2xNes?si=El0N1BoIzGRKLskm" target="_blank" rel="noopener">مشاهدة الفيديو</a>
+          <h3>ملخص المباراة النهائية</h3>
+          <p>ضع رابط النهائي الصحيح هنا عند توفره.</p>
+          <a class="btn-home" href="#" onclick="return false;">مشاهدة الفيديو</a>
         </div>
       </article>
 
@@ -644,9 +720,9 @@
           <img src="assets/img/logo-tournament.png" alt="شعار البطولة">
         </div>
         <div class="video-body">
-          <h3>ملخص المباراة النهائية</h3>
-          <p>ضع رابط النهائي الصحيح هنا عند توفره.</p>
-          <a class="btn-home" href="#" onclick="return false;">مشاهدة الفيديو</a>
+          <h3>المؤتمر الصحفي للإعلان عن النسخة 13 من كأس منصور بن زايد</h3>
+          <p>إطلاق البطولة رسميًا والإعلان عن تفاصيل النسخة الثالثة عشرة.</p>
+          <a class="btn-home" href="https://youtu.be/AZ3hvX2xNes?si=El0N1BoIzGRKLskm" target="_blank" rel="noopener">مشاهدة الفيديو</a>
         </div>
       </article>
     </div>
@@ -689,9 +765,10 @@
         <p>مكان مخصص للصورة القادمة</p>
       </div>
 
-      <div class="gallery-card">
-        <h3>صورة إضافية</h3>
-        <p>مكان مخصص للصورة القادمة</p>
+      <div class="gallery-card playstation-card">
+        <div class="ps-icon">🎮</div>
+        <h3>صور بطولة البلايستيشن</h3>
+        <p>بطولة الناشئين الإلكترونية المصاحبة لبطولة كأس منصور بن زايد</p>
       </div>
     </div>
   </section>
