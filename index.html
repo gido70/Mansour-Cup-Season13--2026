@@ -254,7 +254,7 @@
 
     .videos-grid{
       display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
+      grid-template-columns:repeat(4,minmax(0,1fr));
       gap:16px;
       padding:20px;
     }
@@ -364,6 +364,18 @@
       color:rgba(255,255,255,.78);
       line-height:1.7;
       font-size:.96rem;
+    }
+
+    .gallery-link{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      transition:transform .2s ease, filter .2s ease;
+    }
+
+    .gallery-link:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.04);
     }
 
     .gallery-photo{
@@ -780,13 +792,24 @@
       </article>
 
       <article class="video-card">
-        <a class="video-thumb video-thumb-photo" href="https://www.instagram.com/reel/DVW0aWmjaR0/" target="_blank" rel="noopener" aria-label="منصور بن زايد يشهد منافسات ثالث جولات كأس سموه لكرة القدم">
+        <a class="video-thumb video-thumb-photo" href="assets/videos/opening.mp4" target="_blank" rel="noopener" aria-label="حفل افتتاح بطولة كأس منصور بن زايد 2026">
+          <img src="assets/img/opening-video.jpg" alt="صورة حفل الافتتاح">
+        </a>
+        <div class="video-body">
+          <h3>حفل افتتاح بطولة كأس منصور بن زايد 2026</h3>
+          <p>لقطات من مراسم الافتتاح والأجواء المصاحبة لانطلاق البطولة.</p>
+          <a class="btn-home" href="assets/videos/opening.mp4" target="_blank" rel="noopener">مشاهدة الفيديو</a>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <a class="video-thumb video-thumb-photo" href="assets/videos/sheikh-visit.mp4" target="_blank" rel="noopener" aria-label="منصور بن زايد يشهد منافسات ثالث جولات كأس سموه لكرة القدم">
           <img src="assets/img/sheikh-visit-video.png" alt="صورة زيارة الشيخ منصور">
         </a>
         <div class="video-body">
           <h3>منصور بن زايد يشهد منافسات ثالث جولات كأس سموه لكرة القدم</h3>
           <p>لقطات خاصة من الزيارة ومتابعة مجريات البطولة من أرض الملعب.</p>
-          <a class="btn-home" href="https://www.instagram.com/reel/DVW0aWmjaR0/" target="_blank" rel="noopener">مشاهدة الفيديو</a>
+          <a class="btn-home" href="assets/videos/sheikh-visit.mp4" target="_blank" rel="noopener">مشاهدة الفيديو</a>
         </div>
       </article>
 
@@ -809,51 +832,46 @@
     </div>
 
     <div class="gallery-grid">
-      <a class="gallery-card gallery-photo" href="gallery-opening.html">
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-opening.html">
         <img src="assets/gallery/opening/cover.jpg" alt="حفل الافتتاح">
         <div class="gallery-caption">
           <h3>حفل الافتتاح</h3>
-          <p>لقطات من مراسم افتتاح البطولة</p>
+          <p>لقطات من مراسم الافتتاح والأجواء المصاحبة لانطلاق البطولة.</p>
         </div>
       </a>
-
-      <a class="gallery-card gallery-photo" href="gallery-teams.html">
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-teams.html">
         <img src="assets/gallery/teams/cover.jpg" alt="فرق البطولة">
         <div class="gallery-caption">
           <h3>فرق البطولة</h3>
-          <p>صور الفرق المشاركة في البطولة</p>
+          <p>صور الفرق المشاركة في بطولة كأس منصور بن زايد 2026.</p>
         </div>
       </a>
-
-      <a class="gallery-card gallery-photo" href="gallery-atmosphere.html">
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-atmosphere.html">
         <img src="assets/gallery/atmosphere/cover.jpg" alt="أجواء البطولة">
         <div class="gallery-caption">
           <h3>أجواء البطولة</h3>
-          <p>صور من أجواء المباريات والفعاليات</p>
+          <p>لقطات متنوعة من أجواء البطولة داخل وخارج الملعب.</p>
         </div>
       </a>
-
-      <a class="gallery-card gallery-photo" href="gallery-stands.html">
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-stands.html">
         <img src="assets/gallery/stands/cover.jpg" alt="من المدرجات">
         <div class="gallery-caption">
           <h3>من المدرجات</h3>
-          <p>صور الجماهير وتفاعلهم مع المباريات</p>
+          <p>صور من المدرجات وتفاعل الحضور خلال المباريات.</p>
         </div>
       </a>
-
-      <a class="gallery-card gallery-photo" href="gallery-trophy.html">
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-trophy.html">
         <img src="assets/gallery/trophy/cover.jpg" alt="التتويج">
         <div class="gallery-caption">
           <h3>التتويج</h3>
-          <p>لحظات التتويج وختام البطولة</p>
+          <p>لحظات التتويج وختام البطولة وتسليم الجوائز.</p>
         </div>
       </a>
-
-      <a class="gallery-card gallery-photo" href="gallery-playstation.html">
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-playstation.html">
         <img src="assets/gallery/playstation/cover.jpg" alt="بطولة البلايستيشن">
         <div class="gallery-caption">
           <h3>بطولة البلايستيشن</h3>
-          <p>صور بطولة البلايستيشن المصاحبة</p>
+          <p>صور بطولة البلايستيشن المصاحبة لفعاليات البطولة.</p>
         </div>
       </a>
     </div>
