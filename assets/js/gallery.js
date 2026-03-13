@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const items = Array.from(document.querySelectorAll(".photo-item"));
+  const items = Array.from(document.querySelectorAll(".gallery-item"));
   const lightbox = document.querySelector(".lightbox");
   const isPhone = window.matchMedia("(max-width: 640px)").matches;
 
   if (!items.length) return;
 
-  // على الهاتف: لا تكبير ولا انتقال للصورة المنفردة، فقط تصفح أفقي
+  // On phone: disable opening to avoid hanging; gallery becomes horizontal swipe only.
   if (isPhone || !lightbox) {
     items.forEach((item) => {
       item.addEventListener("click", (e) => e.preventDefault());
@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const lbImg = lightbox.querySelector("img");
-  const btnClose = lightbox.querySelector(".lb-close");
-  const btnPrev = lightbox.querySelector(".lb-prev");
-  const btnNext = lightbox.querySelector(".lb-next");
+  const btnClose = lightbox.querySelector(".lightbox-close");
+  const btnPrev = lightbox.querySelector(".lightbox-prev");
+  const btnNext = lightbox.querySelector(".lightbox-next");
   let current = 0;
 
   function show(index){
@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     lightbox.classList.add("show");
     document.body.style.overflow = "hidden";
   }
+
   function closeBox(){
     lightbox.classList.remove("show");
     lbImg.src = "";
@@ -41,9 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnClose) btnClose.addEventListener("click", closeBox);
   if (btnPrev) btnPrev.addEventListener("click", () => show(current - 1));
   if (btnNext) btnNext.addEventListener("click", () => show(current + 1));
+
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) closeBox();
   });
+
   document.addEventListener("keydown", (e) => {
     if (!lightbox.classList.contains("show")) return;
     if (e.key === "Escape") closeBox();
