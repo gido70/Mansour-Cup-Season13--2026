@@ -1,36 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const items = Array.from(document.querySelectorAll(".photo-item"));
+  const lightbox = document.querySelector(".lightbox");
+  const isPhone = window.matchMedia("(max-width: 640px)").matches;
 
-const items = document.querySelectorAll(".photo-item");
-const lightbox = document.querySelector(".lightbox");
-const img = lightbox.querySelector("img");
+  if (!items.length) return;
 
-let current = 0;
+  // On phone: no lightbox, open the image directly in a new tab to avoid hanging.
+  if (isPhone || !lightbox) {
+    items.forEach((item) => {
+      item.setAttribute("target", "_blank");
+      item.setAttribute("rel", "noopener");
+    });
+    return;
+  }
 
-function show(index){
-current = index;
-img.src = items[index].href;
-lightbox.classList.add("show");
-}
+  const lbImg = lightbox.querySelector("img");
+  const btnClose = lightbox.querySelector(".lb-close");
+  const btnPrev = lightbox.querySelector(".lb-prev");
+  const btnNext = lightbox.querySelector(".lb-next");
 
-items.forEach((item,i)=>{
-item.addEventListener("click",e=>{
-e.preventDefault();
-show(i);
-});
-});
+  let current = 0;
 
-document.querySelector(".lb-close").onclick = () =>{
-lightbox.classList.remove("show");
-};
+  function show(index){
+    current = (index + items.length) % items.length;
+    lbImg.src = items[current].getAttribute("href");
+    lightbox.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
 
-document.querySelector(".lb-prev").onclick = ()=>{
-current = (current - 1 + items.length) % items.length;
-img.src = items[current].href;
-};
+  function closeBox(){
+    lightbox.classList.remove("show");
+    lbImg.src = "";
+    document.body.style.overflow = "";
+  }
 
-document.querySelector(".lb-next").onclick = ()=>{
-current = (current + 1) % items.length;
-img.src = items[current].href;
-};
+  items.forEach((item, idx) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      show(idx);
+    });
+  });
 
+  btnClose?.addEventListener("click", closeBox);
+  btnPrev?.addEventListener("click", () => show(current - 1));
+  btnNext?.addEventListener("click", () => show(current + 1));
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeBox();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("show")) return;
+    if (e.key === "Escape") closeBox();
+    if (e.key === "ArrowLeft") show(current + 1);
+    if (e.key === "ArrowRight") show(current - 1);
+  });
 });
