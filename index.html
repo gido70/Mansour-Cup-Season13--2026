@@ -128,7 +128,7 @@
     }
 
     .news-date-badge{
-      background:linear-gradient(180deg, #b63a3a, #8f2626);
+      background:linear-gradient(180deg,#8c2c2c,#6f1e1e);
       color:#fff;
       text-align:center;
       font-weight:800;
@@ -254,7 +254,7 @@
 
     .videos-grid{
       display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
+      grid-template-columns:repeat(4,minmax(0,1fr));
       gap:16px;
       padding:20px;
     }
@@ -366,6 +366,18 @@
       font-size:.96rem;
     }
 
+    .gallery-link{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      transition:transform .2s ease, filter .2s ease;
+    }
+
+    .gallery-link:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.04);
+    }
+
     .gallery-photo{
       padding:0;
       overflow:hidden;
@@ -469,7 +481,11 @@
         order:2;
       }
 
-      .videos-grid,
+      .videos-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:12px;
+      }
+
       .gallery-grid{
         grid-template-columns:1fr;
       }
@@ -488,7 +504,11 @@
       }
 
       .news-cover{
-        min-height:180px;
+        min-height:140px;
+      }
+
+      .video-body{
+        padding:12px;
       }
 
       .video-body h3,
@@ -498,6 +518,161 @@
 
       .hero-note{
         font-size:1rem;
+      }
+
+      .gallery-photo img{
+        height:180px;
+      }
+    }
+
+    @media (max-width: 720px){
+      .home-wrap{
+        padding:12px 10px 28px;
+      }
+
+      .section-card{
+        border-radius:18px;
+        margin-bottom:18px;
+      }
+
+      .section-head{
+        padding:14px 16px;
+      }
+
+      .section-head h2{
+        font-size:1.45rem;
+      }
+
+      .top-grid{
+        gap:14px;
+        padding:14px;
+      }
+
+      .news-accordion-body,
+      .groups-box{
+        padding:14px;
+      }
+
+      .news-row{
+        gap:10px;
+        padding:14px;
+      }
+
+      .news-info h3{
+        font-size:1.05rem;
+        line-height:1.65;
+      }
+
+      .news-info p{
+        font-size:.94rem;
+        line-height:1.75;
+      }
+
+      .btn-home{
+        width:100%;
+        padding:11px 14px;
+        font-size:.96rem;
+      }
+
+      .videos-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
+        padding:14px;
+      }
+
+      .video-card{
+        border-radius:16px;
+      }
+
+      .video-body h3{
+        font-size:1rem;
+        line-height:1.55;
+      }
+
+      .video-body p{
+        font-size:.9rem;
+        line-height:1.65;
+      }
+
+      .gallery-grid{
+        gap:12px;
+        padding:14px;
+      }
+
+      .gallery-card{
+        min-height:auto;
+        border-radius:16px;
+      }
+
+      .gallery-photo img{
+        height:160px;
+      }
+
+      .gallery-caption{
+        padding:12px 14px 14px;
+      }
+
+      .gallery-caption h3{
+        font-size:1.02rem;
+      }
+
+      .gallery-caption p{
+        font-size:.9rem;
+        line-height:1.65;
+      }
+
+      .group-card{
+        min-height:86px;
+        padding:12px 14px;
+        border-radius:14px;
+      }
+
+      .group-card .text-wrap{
+        font-size:.98rem;
+      }
+
+      .group-card small{
+        font-size:.86rem;
+      }
+
+      .group-letter{
+        width:40px;
+        height:40px;
+        font-size:1.15rem;
+        flex:0 0 40px;
+      }
+
+      .social-wrap{
+        gap:12px;
+        padding:18px 14px 8px;
+      }
+
+      .social-icon-link{
+        width:64px;
+        height:64px;
+        border-radius:18px;
+        font-size:1.7rem;
+      }
+
+      .social-note{
+        padding:0 14px 18px;
+        font-size:.94rem;
+        line-height:1.7;
+      }
+    }
+
+    @media (max-width: 480px){
+      .videos-grid{
+        grid-template-columns:1fr;
+      }
+
+      .gallery-photo img{
+        height:150px;
+      }
+
+      .news-date-badge{
+        font-size:.94rem;
+        padding:11px 12px;
       }
     }
   </style>
@@ -600,7 +775,7 @@
                 <h3>آخر نشرة صادرة</h3>
                 <p>تغطية أحداث البطولة</p>
               </div>
-              <a class="btn-home" href="assets/news/news-2026-03-11.pdf" target="_blank">قراءة النشرة</a>
+              <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-03-11.pdf&title=نشرة الأربعاء 2026-3-11">قراءة النشرة</a>
             </div>
 
             <div class="news-row">
@@ -611,7 +786,7 @@
                 <h3>متابعة البطولة</h3>
                 <p>أبرز أحداث المنافسات</p>
               </div>
-              <a class="btn-home" href="assets/news/news-2026-03-09.pdf" target="_blank">قراءة النشرة</a>
+              <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-03-09.pdf&title=نشرة الاثنين 2026-3-9">قراءة النشرة</a>
             </div>
 
             <div class="news-row">
@@ -622,7 +797,7 @@
                 <h3>مجريات المنافسات</h3>
                 <p>أبرز اللقطات اليومية</p>
               </div>
-              <a class="btn-home" href="assets/news/news-2026-03-07.pdf" target="_blank">قراءة النشرة</a>
+              <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-03-07.pdf&title=نشرة السبت 2026-3-7">قراءة النشرة</a>
             </div>
 
             <div class="news-row">
@@ -633,7 +808,7 @@
                 <h3>تفاصيل المباريات</h3>
                 <p>أخبار الفرق والمنافسات</p>
               </div>
-              <a class="btn-home" href="assets/news/news-2026-03-05.pdf" target="_blank">قراءة النشرة</a>
+              <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-03-05.pdf&title=نشرة الخميس 2026-3-5">قراءة النشرة</a>
             </div>
 
             <div id="moreIssues" style="display:none;">
@@ -646,7 +821,7 @@
                   <h3>عدد الأربعاء 4 مارس</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-03-04.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-03-04.pdf&title=نشرة الأربعاء 2026-3-4">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -657,7 +832,7 @@
                   <h3>عدد الثلاثاء 3 مارس</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-03-03.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-03-03.pdf&title=نشرة الثلاثاء 2026-3-3">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -668,7 +843,7 @@
                   <h3>عدد الاثنين 2 مارس</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-03-02.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-03-02.pdf&title=نشرة الاثنين 2026-3-2">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -679,7 +854,7 @@
                   <h3>عدد السبت 28 فبراير</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-02-28.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-02-28.pdf&title=نشرة السبت 2026-2-28">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -690,7 +865,7 @@
                   <h3>عدد الجمعة 27 فبراير</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-02-27.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-02-27.pdf&title=نشرة الجمعة 2026-2-27">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -701,7 +876,7 @@
                   <h3>عدد الخميس 26 فبراير</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-02-26.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-02-26.pdf&title=نشرة الخميس 2026-2-26">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -712,7 +887,7 @@
                   <h3>عدد الأربعاء 25 فبراير</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-02-25.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-02-25.pdf&title=نشرة الأربعاء 2026-2-25">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -723,7 +898,7 @@
                   <h3>عدد الثلاثاء 24 فبراير</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-02-24.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-02-24.pdf&title=نشرة الثلاثاء 2026-2-24">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -734,7 +909,7 @@
                   <h3>عدد السبت 21 فبراير</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-02-21.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-02-21.pdf&title=نشرة السبت 2026-2-21">قراءة النشرة</a>
               </div>
 
               <div class="news-row">
@@ -745,13 +920,13 @@
                   <h3>عدد الجمعة 20 فبراير</h3>
                   <p>أرشيف النشرات</p>
                 </div>
-                <a class="btn-home" href="assets/news/news-2026-02-20.pdf" target="_blank">قراءة النشرة</a>
+                <a class="btn-home" href="news-viewer.html?file=assets/news/news-2026-02-20.pdf&title=نشرة الجمعة 2026-2-20">قراءة النشرة</a>
               </div>
 
             </div>
 
             <div style="text-align:center; margin-top:12px;">
-              <button class="btn-home" id="moreIssuesBtn" type="button" onclick="toggleMoreIssues()">
+              <button class="btn-home" type="button" onclick="toggleMoreIssues()">
                 عرض بقية الأعداد
               </button>
             </div>
@@ -769,35 +944,46 @@
 
     <div class="videos-grid">
       <article class="video-card">
-        <a class="video-thumb video-thumb-photo" href="https://youtu.be/AZ3hvX2xNes?si=El0N1BoIzGRKLskm" target="_blank" rel="noopener" aria-label="المؤتمر الصحفي للإعلان عن النسخة 13 من كأس منصور بن زايد لكرة القدم">
+        <a class="video-thumb video-thumb-photo" href="video-viewer.html?type=youtube&src=https%3A%2F%2Fyoutu.be%2FAZ3hvX2xNes%3Fsi%3DEl0N1BoIzGRKLskm&title=المؤتمر%20الصحفي%20والقرعة" aria-label="المؤتمر الصحفي للإعلان عن النسخة 13 من كأس منصور بن زايد لكرة القدم">
           <img src="assets/img/draw-video.jpg" alt="صورة المؤتمر الصحفي والقرعة">
         </a>
         <div class="video-body">
           <h3>المؤتمر الصحفي للإعلان عن النسخة 13 من كأس منصور بن زايد لكرة القدم</h3>
           <p>تغطية المؤتمر الصحفي وقرعة البطولة والإعلان الرسمي عن تفاصيل النسخة الثالثة عشرة.</p>
-          <a class="btn-home" href="https://youtu.be/AZ3hvX2xNes?si=El0N1BoIzGRKLskm" target="_blank" rel="noopener">مشاهدة الفيديو</a>
+          <a class="btn-home" href="video-viewer.html?type=youtube&src=https%3A%2F%2Fyoutu.be%2FAZ3hvX2xNes%3Fsi%3DEl0N1BoIzGRKLskm&title=المؤتمر%20الصحفي%20والقرعة">مشاهدة الفيديو</a>
         </div>
       </article>
 
       <article class="video-card">
-        <a class="video-thumb video-thumb-photo" href="https://www.instagram.com/reel/DVW0aWmjaR0/" target="_blank" rel="noopener" aria-label="منصور بن زايد يشهد منافسات ثالث جولات كأس سموه لكرة القدم">
+        <a class="video-thumb video-thumb-photo" href="video-viewer.html?type=mp4&src=assets/videos/opening.mp4&title=حفل%20الافتتاح" aria-label="حفل افتتاح بطولة كأس منصور بن زايد 2026">
+          <img src="assets/img/opening-video.jpg" alt="صورة حفل الافتتاح">
+        </a>
+        <div class="video-body">
+          <h3>حفل افتتاح بطولة كأس منصور بن زايد 2026</h3>
+          <p>لقطات من مراسم الافتتاح والأجواء المصاحبة لانطلاق البطولة.</p>
+          <a class="btn-home" href="video-viewer.html?type=mp4&src=assets/videos/opening.mp4&title=حفل%20الافتتاح">مشاهدة الفيديو</a>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <a class="video-thumb video-thumb-photo" href="video-viewer.html?type=mp4&src=assets/videos/sheikh-visit.mp4&title=زيارة%20الشيخ%20منصور" aria-label="منصور بن زايد يشهد منافسات ثالث جولات كأس سموه لكرة القدم">
           <img src="assets/img/sheikh-visit-video.png" alt="صورة زيارة الشيخ منصور">
         </a>
         <div class="video-body">
           <h3>منصور بن زايد يشهد منافسات ثالث جولات كأس سموه لكرة القدم</h3>
           <p>لقطات خاصة من الزيارة ومتابعة مجريات البطولة من أرض الملعب.</p>
-          <a class="btn-home" href="https://www.instagram.com/reel/DVW0aWmjaR0/" target="_blank" rel="noopener">مشاهدة الفيديو</a>
+          <a class="btn-home" href="video-viewer.html?type=mp4&src=assets/videos/sheikh-visit.mp4&title=زيارة%20الشيخ%20منصور">مشاهدة الفيديو</a>
         </div>
       </article>
 
       <article class="video-card">
-        <a class="video-thumb video-thumb-photo" href="https://youtu.be/1fD9tHCz48s?si=k6msmYE9QtIzf41o" target="_blank" rel="noopener" aria-label="ملخص المباراة النهائية من اليوم السادس عشر من بطولة كأس منصور بن زايد الدورة 13">
+        <a class="video-thumb video-thumb-photo" href="video-viewer.html?type=youtube&src=https%3A%2F%2Fyoutu.be%2F1fD9tHCz48s%3Fsi%3Dk6msmYE9QtIzf41o&title=ملخص%20النهائي" aria-label="ملخص المباراة النهائية من اليوم السادس عشر من بطولة كأس منصور بن زايد الدورة 13">
           <img src="assets/img/final-highlights-video.jpg" alt="صورة تتويج البطل وملخص النهائي">
         </a>
         <div class="video-body">
           <h3>ملخص المباراة النهائية من اليوم السادس عشر من بطولة كأس منصور بن زايد الدورة 13</h3>
           <p>أبرز لقطات النهائي وتتويج البطل في ختام البطولة.</p>
-          <a class="btn-home" href="https://youtu.be/1fD9tHCz48s?si=k6msmYE9QtIzf41o" target="_blank" rel="noopener">مشاهدة الفيديو</a>
+          <a class="btn-home" href="video-viewer.html?type=youtube&src=https%3A%2F%2Fyoutu.be%2F1fD9tHCz48s%3Fsi%3Dk6msmYE9QtIzf41o&title=ملخص%20النهائي">مشاهدة الفيديو</a>
         </div>
       </article>
     </div>
@@ -809,42 +995,48 @@
     </div>
 
     <div class="gallery-grid">
-      <div class="gallery-card gallery-photo">
-        <img src="assets/img/sheikh-visit-1.jpg" alt="زيارة الشيخ منصور">
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-opening.html">
+        <img src="assets/gallery/opening/cover.jpg" alt="حفل الافتتاح">
         <div class="gallery-caption">
-          <h3>زيارة الشيخ منصور</h3>
-          <p>لقطة من الزيارة الرسمية للبطولة</p>
+          <h3>حفل الافتتاح</h3>
+          <p>لقطات من مراسم الافتتاح والأجواء المصاحبة لانطلاق البطولة.</p>
         </div>
-      </div>
-
-      <div class="gallery-card gallery-photo">
-        <img src="assets/img/sheikh-visit-2.jpg" alt="زيارة الشيخ منصور">
+      </a>
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-teams.html">
+        <img src="assets/gallery/teams/cover.jpg" alt="فرق البطولة">
+        <div class="gallery-caption">
+          <h3>فرق البطولة</h3>
+          <p>صور الفرق المشاركة في بطولة كأس منصور بن زايد 2026.</p>
+        </div>
+      </a>
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-atmosphere.html">
+        <img src="assets/gallery/atmosphere/cover.jpg" alt="أجواء البطولة">
+        <div class="gallery-caption">
+          <h3>أجواء البطولة</h3>
+          <p>لقطات متنوعة من أجواء البطولة داخل وخارج الملعب.</p>
+        </div>
+      </a>
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-stands.html">
+        <img src="assets/gallery/stands/cover.jpg" alt="من المدرجات">
         <div class="gallery-caption">
           <h3>من المدرجات</h3>
-          <p>متابعة مجريات البطولة من المنصة</p>
+          <p>صور من المدرجات وتفاعل الحضور خلال المباريات.</p>
         </div>
-      </div>
-
-      <div class="gallery-card">
-        <h3>حفل الافتتاح</h3>
-        <p>مكان مخصص للصورة القادمة</p>
-      </div>
-
-      <div class="gallery-card">
-        <h3>التفاعل الجماهيري</h3>
-        <p>مكان مخصص للصورة القادمة</p>
-      </div>
-
-      <div class="gallery-card">
-        <h3>ختام البطولة</h3>
-        <p>مكان مخصص للصورة القادمة</p>
-      </div>
-
-      <div class="gallery-card playstation-card">
-        <div class="ps-icon">🎮</div>
-        <h3>صور بطولة البلايستيشن</h3>
-        <p>بطولة الناشئين الإلكترونية المصاحبة لبطولة كأس منصور بن زايد</p>
-      </div>
+      </a>
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-trophy.html">
+        <img src="assets/gallery/trophy/cover.jpg" alt="التتويج">
+        <div class="gallery-caption">
+          <h3>التتويج</h3>
+          <p>لحظات التتويج وختام البطولة وتسليم الجوائز.</p>
+        </div>
+      </a>
+      <a class="gallery-card gallery-photo gallery-link" href="gallery-playstation.html">
+        <img src="assets/gallery/playstation/cover.jpg" alt="بطولة البلايستيشن">
+        <div class="gallery-caption">
+          <h3>بطولة البلايستيشن</h3>
+          <p>صور بطولة البلايستيشن المصاحبة لفعاليات البطولة.</p>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -871,12 +1063,8 @@
 <script>
   function toggleMoreIssues(){
     const box = document.getElementById("moreIssues");
-    const btn = document.getElementById("moreIssuesBtn");
-    if(!box || !btn) return;
-
-    const isHidden = (box.style.display === "none" || box.style.display === "");
-    box.style.display = isHidden ? "block" : "none";
-    btn.textContent = isHidden ? "إخفاء بقية الأعداد" : "عرض بقية الأعداد";
+    if(!box) return;
+    box.style.display = (box.style.display === "none" || box.style.display === "") ? "block" : "none";
   }
 
   if ("serviceWorker" in navigator) {
