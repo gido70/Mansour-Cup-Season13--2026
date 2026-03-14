@@ -81,13 +81,20 @@ const CupStats = (() => {
     });
   }
 
+  const PLAYER_TEAM_OVERRIDES = {
+    "ابراهيما با": "المركز الوطني للمناصحة",
+    "فلافيو دي ليما": "مكتب الشؤون التنموية واسر الشهداء"
+  };
+
   function addCount(map, key, team, n=1){
     if(!key) return;
     const k = String(key).trim();
     if(!k) return;
-    if(!map[k]) map[k] = {name:k, team:team||'', n:0};
+    const forcedTeam = PLAYER_TEAM_OVERRIDES[k] || '';
+    if(!map[k]) map[k] = {name:k, team:forcedTeam || team || '', n:0};
     map[k].n += n;
-    if(team && !map[k].team) map[k].team = team;
+    if(forcedTeam) map[k].team = forcedTeam;
+    else if(team && !map[k].team) map[k].team = team;
   }
 
   function sortMapToArr(map){
