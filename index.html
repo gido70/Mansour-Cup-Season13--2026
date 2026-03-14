@@ -530,6 +530,11 @@
         padding:12px 10px 28px;
       }
 
+      /* في الموبايل: إظهار أول نشرة فقط، والبقية عبر الزر */
+      .news-list > .news-row:nth-of-type(n+2){
+        display:none;
+      }
+
       .section-card{
         border-radius:18px;
         margin-bottom:18px;
@@ -1064,8 +1069,18 @@
     const btn = document.getElementById("toggleIssuesBtn");
     if(!box || !btn) return;
 
+    const isMobile = window.innerWidth <= 720;
+    const hiddenByDefaultRows = document.querySelectorAll(".news-list > .news-row:nth-of-type(n+2)");
     const isHidden = (box.style.display === "none" || box.style.display === "");
+
     box.style.display = isHidden ? "block" : "none";
+
+    if(isMobile){
+      hiddenByDefaultRows.forEach(function(row){
+        row.style.display = isHidden ? "grid" : "none";
+      });
+    }
+
     btn.textContent = isHidden ? "إخفاء بقية الأعداد" : "عرض بقية الأعداد";
   }
 
