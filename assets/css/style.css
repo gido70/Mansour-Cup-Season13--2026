@@ -471,3 +471,36 @@ body[data-group="D"] .card-h{ border-bottom-color: rgba(109,26,26,.35); }
   font-size:14px;
   opacity:.9;
 }
+/* ===== ضبط عنوان صفحة الجوائز الفردية ===== */
+body.awards-page .hero-card h1,
+body[data-page="awards"] .hero-card h1,
+.awards-page .hero-card h1,
+body.awards-page .page-title,
+body[data-page="awards"] .page-title,
+.awards-page .page-title,
+body.awards-page .awards-title,
+body[data-page="awards"] .awards-title,
+.awards-page .awards-title{
+  font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.22;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 auto 14px;
+}
+
+@media (max-width: 760px){
+  body.awards-page .hero-card h1,
+  body[data-page="awards"] .hero-card h1,
+  .awards-page .hero-card h1,
+  body.awards-page .page-title,
+  body[data-page="awards"] .page-title,
+  .awards-page .page-title,
+  body.awards-page .awards-title,
+  body[data-page="awards"] .awards-title,
+  .awards-page .awards-title{
+    font-size: clamp(22px, 6vw, 32px);
+    line-height: 1.28;
+    margin: 0 auto 12px;
+  }
+}
