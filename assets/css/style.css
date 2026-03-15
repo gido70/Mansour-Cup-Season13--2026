@@ -471,25 +471,3 @@ body[data-group="D"] .card-h{ border-bottom-color: rgba(109,26,26,.35); }
   font-size:14px;
   opacity:.9;
 }
-/* ===== تحسين عرض صورة الجوائز في الموبايل ===== */
-
-.awards-image img {
-    width: 100%;
-    height: auto;
-    max-height: 420px;
-    display: block;
-    margin: auto;
-}
-
-/* الموبايل */
-@media (max-width:768px){
-
-    .awards-image img{
-        width: 100%;
-        height: auto;
-        max-height: 320px;
-        display:block;
-        margin:auto;
-    }
-
-}
