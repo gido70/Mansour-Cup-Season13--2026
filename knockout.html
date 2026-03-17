@@ -12,6 +12,123 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="كأس منصور">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <style>
+    .ko-grid{
+      display:grid;
+      gap:18px;
+    }
+    .ko-stage-card{
+      background:linear-gradient(180deg, rgba(12,30,58,.96), rgba(8,23,44,.96));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:22px;
+      box-shadow:0 12px 34px rgba(0,0,0,.24);
+      overflow:hidden;
+    }
+    .ko-stage-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 22px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(90deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      color:#fff;
+    }
+    .ko-stage-head h3{
+      margin:0;
+      font-size:1.4rem;
+      line-height:1.2;
+    }
+    .ko-count{
+      min-width:42px;
+      height:42px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.1);
+      color:#fff;
+      font-size:1rem;
+    }
+    .ko-stage-body{
+      padding:16px;
+      display:grid;
+      gap:14px;
+    }
+    .ko-match{
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      padding:16px;
+    }
+    .ko-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color:rgba(255,255,255,.78);
+      margin-bottom:10px;
+      font-size:.98rem;
+    }
+    .ko-main{
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:14px;
+      align-items:center;
+    }
+    .ko-team{
+      color:#fff;
+      font-weight:800;
+      line-height:1.7;
+      font-size:1.1rem;
+    }
+    .ko-team.home{
+      text-align:right;
+    }
+    .ko-team.away{
+      text-align:left;
+    }
+    .ko-score{
+      min-width:110px;
+      text-align:center;
+      color:#fff;
+      font-weight:900;
+      font-size:1.45rem;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:12px;
+      padding:10px 14px;
+    }
+    .ko-empty{
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:16px;
+      padding:20px;
+      color:#fff;
+      text-align:center;
+      background:rgba(255,255,255,.02);
+      line-height:1.8;
+    }
+    .ko-note{
+      color:rgba(255,255,255,.8);
+      line-height:1.9;
+      margin-top:10px;
+    }
+    @media (max-width: 720px){
+      .ko-main{
+        grid-template-columns:1fr;
+      }
+      .ko-team.home, .ko-team.away, .ko-score{
+        text-align:center;
+      }
+      .ko-score{
+        margin:0 auto;
+      }
+      .ko-stage-head h3{
+        font-size:1.2rem;
+      }
+    }
+  </style>
 </head>
 <body id="page">
 <header class="topbar">
@@ -46,23 +163,136 @@
     </div>
     <div class="card-b">
       <div class="btn-row">
-        <a class="btn btn-ga" href="qf.html">ربع النهائي</a>
-        <a class="btn btn-gb" href="sf.html">نصف النهائي</a>
-        <a class="btn btn-gc" href="tp.html">الثالث والرابع</a>
-        <a class="btn btn-gd" href="final.html">النهائي</a>
+        <a class="btn btn-ga" href="#QF">ربع النهائي</a>
+        <a class="btn btn-gb" href="#SF">نصف النهائي</a>
+        <a class="btn btn-gc" href="#TP">الثالث والرابع</a>
+        <a class="btn btn-gd" href="#F">النهائي</a>
       </div>
-      <div class="muted small" style="margin-top:10px">
-        طريقة الإدخال: ضع مباريات الأدوار النهائية داخل <span class="mono">data/matches.csv</span> واجعل عمود <span class="mono">group</span> يساوي: QF / SF / TP / F.
+      <div class="ko-note">
+        هذه الصفحة تقرأ الآن من Supabase مباشرة. أي تعديل في جدول المباريات للأكواد
+        QF / SF / TP / F سيظهر هنا تلقائياً.
       </div>
     </div>
   </section>
+
+  <div id="ko-sections" class="ko-grid">
+    <section class="ko-stage-card">
+      <div class="ko-stage-head">
+        <h3>جاري تحميل الأدوار النهائية...</h3>
+        <div class="ko-count">...</div>
+      </div>
+      <div class="ko-stage-body">
+        <div class="ko-empty">يرجى الانتظار قليلاً</div>
+      </div>
+    </section>
+  </div>
 </main>
 
 <footer class="footer">© بطولة كأس منصور بن زايد 2026</footer>
 
-<script src="assets/js/main.js"></script>
-<script> CupApp.initKnockout(); </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <script>
+  const koStages = [
+    { code: "QF", title: "ربع النهائي", anchor: "QF" },
+    { code: "SF", title: "نصف النهائي", anchor: "SF" },
+    { code: "TP", title: "الثالث والرابع", anchor: "TP" },
+    { code: "F",  title: "النهائي", anchor: "F" }
+  ];
+
+  async function loadKnockoutPage() {
+    const container = document.getElementById("ko-sections");
+    if (!container) return;
+
+    const { data: teams, error: teamsError } = await supabaseClient
+      .from("teams")
+      .select("id, name");
+
+    if (teamsError) {
+      console.error("خطأ في جلب الفرق:", teamsError);
+      container.innerHTML = '<section class="ko-stage-card"><div class="ko-stage-body"><div class="ko-empty">حدث خطأ في جلب أسماء الفرق</div></div></section>';
+      return;
+    }
+
+    const teamMap = {};
+    teams.forEach(t => {
+      teamMap[t.id] = t.name;
+    });
+
+    const { data: matches, error: matchesError } = await supabaseClient
+      .from("matches")
+      .select(`
+        id,
+        match_code,
+        group_code,
+        round_label,
+        stage,
+        match_date,
+        match_time,
+        home_score,
+        away_score,
+        home_team_id,
+        away_team_id
+      `)
+      .in("group_code", ["QF", "SF", "TP", "F"])
+      .order("match_date", { ascending: true })
+      .order("match_time", { ascending: true });
+
+    if (matchesError) {
+      console.error("خطأ في جلب مباريات الأدوار النهائية:", matchesError);
+      container.innerHTML = '<section class="ko-stage-card"><div class="ko-stage-body"><div class="ko-empty">حدث خطأ في جلب مباريات الأدوار النهائية</div></div></section>';
+      return;
+    }
+
+    container.innerHTML = "";
+
+    koStages.forEach(stage => {
+      const stageMatches = matches.filter(m => (m.group_code || "").toUpperCase() === stage.code);
+
+      const stageSection = document.createElement("section");
+      stageSection.className = "ko-stage-card";
+      stageSection.id = stage.anchor;
+
+      const head = document.createElement("div");
+      head.className = "ko-stage-head";
+      head.innerHTML = `
+        <h3>${stage.title}</h3>
+        <div class="ko-count">${stageMatches.length}</div>
+      `;
+      stageSection.appendChild(head);
+
+      const body = document.createElement("div");
+      body.className = "ko-stage-body";
+
+      if (!stageMatches.length) {
+        body.innerHTML = `<div class="ko-empty">لا توجد مباريات مسجلة في ${stage.title} حالياً</div>`;
+      } else {
+        stageMatches.forEach(match => {
+          const card = document.createElement("div");
+          card.className = "ko-match";
+          card.innerHTML = `
+            <div class="ko-meta">
+              <span>${match.match_date || ""}</span>
+              <span>${match.match_time || ""}</span>
+              <span>${match.match_code || ""}</span>
+            </div>
+            <div class="ko-main">
+              <div class="ko-team home">${teamMap[match.home_team_id] || "—"}</div>
+              <div class="ko-score">${Number(match.home_score || 0)} : ${Number(match.away_score || 0)}</div>
+              <div class="ko-team away">${teamMap[match.away_team_id] || "—"}</div>
+            </div>
+          `;
+          body.appendChild(card);
+        });
+      }
+
+      stageSection.appendChild(body);
+      container.appendChild(stageSection);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", loadKnockoutPage);
+
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
       navigator.serviceWorker.register("service-worker.js")
