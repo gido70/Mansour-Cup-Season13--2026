@@ -423,35 +423,22 @@ const CupApp = (() => {
   function renderGoalsList(text){
     const s = (text || '').trim();
     if(!s) return '<li class="muted">—</li>';
-
-    const normalized = s
-      .replace(/\s+\.\s+/g, '،')
-      .replace(/\s*,\s*/g, '،')
-      .replace(/\s*،\s*/g, '،')
-      .replace(/\r/g, '');
-
-    const parts = normalized
-      .split(/;|\n|،|\||\/+/)
-      .map(x => x.trim())
-      .filter(Boolean);
-
+    // split by ; or newline
+    const parts = s.split(/;|\n|,|،|\||\/+/).map(x => x.trim()).filter(Boolean);
     return parts.map(p => `<li>${escapeHTML(formatGoalItem(p))}</li>`).join('');
   }
 
 
   function formatGoalItem(p){
-    let t = String(p || '').trim();
+    const t = String(p||'').trim();
     if(!t) return '';
-
-    t = t.replace(/\(\s*\d+\s*\)/g, '').trim();
-
+    // normalize common minute notations: "Name 12" -> "Name (12')"
     const m = t.match(/^(.*?)(?:\s*[\-:()]*\s*)(\d{1,3})(?:\s*['’]|\s*د|\s*min)?\s*$/);
     if(m && m[1] && m[2]){
       const name = m[1].trim().replace(/[\-:()]+$/,'').trim();
       const minute = m[2].trim();
       if(name) return `${name} (${minute}')`;
     }
-
     return t;
   }
 
