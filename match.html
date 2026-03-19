@@ -681,7 +681,16 @@
       }
     }
   </style>
-</head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabase = window.supabase.createClient(
+  const supabase = window.supabase.createClient(
+  "PUT_YOUR_SUPABASE_URL_HERE",
+  "PUT_YOUR_ANON_KEY_HERE"
+);
+);
+</script>
 
 <body>
 <header class="topbar">
@@ -1092,5 +1101,37 @@
     });
   }
 </script>
-</body>
+<div id="goals-list" style="color:white; margin-top:20px;"></div>
+
+<script>
+async function loadGoalsFromSupabase(matchId) {
+  const { data, error } = await supabase
+    .from('goals')
+    .select('*')
+    .eq('match_id', matchId);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const container = document.getElementById("goals-list");
+  container.innerHTML = "";
+
+  data.forEach(goal => {
+    const div = document.createElement("div");
+    div.innerHTML = `⚽ هدف في الدقيقة ${goal.minute}`;
+    container.appendChild(div);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const matchId = urlParams.get("id");
+
+  if (matchId) {
+    await loadGoalsFromSupabase(matchId);
+  }
+});
+</script>
 </html>
