@@ -12,22 +12,19 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="كأس منصور">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-  <style>
-    .match-card{border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px 16px;margin-bottom:12px;background:rgba(255,255,255,.03)}
-    .match-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
-    .match-date{opacity:.8;font-size:.95rem}
-    .match-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .match-teams{font-weight:700}
-    .match-score{font-size:1.1rem;font-weight:800}
-    .empty-box{padding:16px;border:1px dashed rgba(255,255,255,.18);border-radius:14px}
-    .hidden{display:none}
-  </style>
 </head>
 <body id="page">
 <header class="topbar">
-  <div class="topbar-logos"><img class="logo" src="assets/img/logo-committee-white.png" alt="شعار اللجنة" /></div>
-  <div class="brand"><div class="brand-title">بطولة كأس منصور بن زايد 2026</div><div class="brand-sub" id="pageSub">المجموعة</div></div>
-  <div class="topbar-logos"><img class="logo" src="assets/img/logo-cup-white.png" alt="شعار البطولة" /></div>
+  <div class="topbar-logos">
+    <img class="logo" src="assets/img/logo-committee-white.png" alt="شعار اللجنة" />
+  </div>
+  <div class="brand">
+    <div class="brand-title">بطولة كأس منصور بن زايد 2026</div>
+    <div class="brand-sub" id="pageSub">المجموعة</div>
+  </div>
+  <div class="topbar-logos">
+    <img class="logo" src="assets/img/logo-cup-white.png" alt="شعار البطولة" />
+  </div>
   <nav class="nav">
     <a class="nav-link" href="index.html">الرئيسية</a>
     <a class="nav-link" href="group.html?g=A">المجموعة A</a>
@@ -40,213 +37,61 @@
     <a class="nav-link" href="knockout.html">الأدوار النهائية</a>
   </nav>
 </header>
+
 <main class="container">
   <section class="card">
-    <div class="card-h"><h2 id="grpTitle">ترتيب المجموعة</h2><div class="badge" id="grpBadge">0</div></div>
+    <div class="card-h">
+      <h2 id="grpTitle">ترتيب المجموعة</h2>
+      <div class="badge" id="grpBadge">0</div>
+    </div>
     <div class="card-b table-wrap">
-      <table class="table" id="tblStandings"><thead><tr><th>#</th><th>الفريق</th><th>ل</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>فارق</th><th>نقاط</th></tr></thead><tbody></tbody></table>
-      <div class="muted small">الترتيب يُحسب تلقائياً من نتائج مباريات فرق هذه المجموعة.</div>
+      <table class="table" id="tblStandings">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>الفريق</th>
+            <th>ل</th>
+            <th>ف</th>
+            <th>ت</th>
+            <th>خ</th>
+            <th>له</th>
+            <th>عليه</th>
+            <th>فارق</th>
+            <th>نقاط</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="muted small">الترتيب يُحسب تلقائياً من نتائج مباريات المجموعة.</div>
       <div id="loadError" class="note hidden"></div>
     </div>
   </section>
+
   <section class="card">
-    <div class="card-h"><h2>مباريات المجموعة</h2><div class="badge" id="matchesCount">0</div></div>
+    <div class="card-h">
+      <h2>مباريات المجموعة</h2>
+      <div class="badge" id="matchesCount">0</div>
+    </div>
     <div class="card-b" id="matchesByRound"></div>
   </section>
 </main>
-<footer class="footer"><a class="muted" href="index.html">عودة للرئيسية</a></footer>
+
+<footer class="footer">
+  <a class="muted" href="index.html">عودة للرئيسية</a>
+</footer>
+
+<script src="assets/js/main.js"></script>
 <script>
-(function () {
-  const params = new URLSearchParams(window.location.search);
-  const currentGroup = (params.get("g") || "A").toUpperCase();
-  const pageSub = document.getElementById("pageSub");
-  const grpTitle = document.getElementById("grpTitle");
-  const grpBadge = document.getElementById("grpBadge");
-  const matchesCount = document.getElementById("matchesCount");
-  const tbody = document.querySelector("#tblStandings tbody");
-  const matchesByRound = document.getElementById("matchesByRound");
-  const loadError = document.getElementById("loadError");
-
-  pageSub.textContent = "المجموعة " + currentGroup;
-  grpTitle.textContent = "ترتيب المجموعة " + currentGroup;
-
-  function showError(message) { loadError.textContent = message; loadError.classList.remove("hidden"); }
-  function clearError() { loadError.textContent = ""; loadError.classList.add("hidden"); }
-
-  function parseCSV(text){
-    const rows = [];
-    let row = [];
-    let cur = "";
-    let inQuotes = false;
-    for(let i=0;i<text.length;i++){
-      const ch = text[i];
-      if(inQuotes){
-        if(ch === '"'){
-          if(text[i+1] === '"'){
-            cur += '"';
-            i++;
-          }else{
-            inQuotes = false;
-          }
-        }else{
-          cur += ch;
-        }
-      }else{
-        if(ch === '"'){
-          inQuotes = true;
-        }else if(ch === ','){
-          row.push(cur);
-          cur = "";
-        }else if(ch === '\n'){
-          row.push(cur);
-          cur = "";
-          if(!row.every(c => String(c).trim() === "")) rows.push(row);
-          row = [];
-        }else if(ch !== '\r'){
-          cur += ch;
-        }
-      }
-    }
-    row.push(cur);
-    if(!row.every(c => String(c).trim() === "")) rows.push(row);
-    return rows;
-  }
-
-  function normalizeHeader(h){ return String(h || "").trim().toLowerCase(); }
-  function buildHeaderIndex(headerRow){
-    const idx = {};
-    headerRow.forEach((h, i) => { idx[normalizeHeader(h)] = i; });
-    return idx;
-  }
-  function getCell(row, idx, key){
-    const i = idx[key];
-    return i === undefined ? "" : row[i];
-  }
-  function parseScore(value){
-    const raw = String(value ?? "").trim();
-    if(raw === "") return null;
-    const n = Number(raw);
-    return Number.isFinite(n) ? n : null;
-  }
-  function escapeHtml(value){
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/\"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-  }
-
-  function renderStandings(rows) {
-    tbody.innerHTML = "";
-    if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="10">لا توجد فرق في هذه المجموعة حالياً.</td></tr>';
-      return;
-    }
-    rows.forEach((row, index) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${index + 1}</td><td>${escapeHtml(row.name)}</td><td>${row.played}</td><td>${row.won}</td><td>${row.drawn}</td><td>${row.lost}</td><td>${row.gf}</td><td>${row.ga}</td><td>${row.gd}</td><td>${row.pts}</td>`;
-      tbody.appendChild(tr);
-    });
-  }
-
-  function renderMatches(matches) {
-    matchesByRound.innerHTML = "";
-    if (!matches.length) {
-      matchesByRound.innerHTML = '<div class="empty-box">لا توجد مباريات مسجلة لهذه المجموعة حالياً.</div>';
-      matchesCount.textContent = "0";
-      return;
-    }
-    matchesCount.textContent = String(matches.length);
-    matches.forEach((match) => {
-      const card = document.createElement("div");
-      card.className = "match-card";
-      const dateText = [match.date || "", match.time || ""].filter(Boolean).join(" - ");
-      const homeScore = match.score1 === null ? "-" : match.score1;
-      const awayScore = match.score2 === null ? "-" : match.score2;
-      card.innerHTML = `<div class="match-head"><div class="match-date">${escapeHtml(dateText || "بدون تاريخ")}</div></div><div class="match-row"><div class="match-teams">${escapeHtml(match.team1)} × ${escapeHtml(match.team2)}</div><div class="match-score">${homeScore} - ${awayScore}</div></div>`;
-      matchesByRound.appendChild(card);
-    });
-  }
-
-  function initStanding(name) {
-    return { name, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
-  }
-
-  function calculateStandings(teamNames, matches) {
-    const table = {};
-    teamNames.forEach((name) => { table[name] = initStanding(name); });
-
-    matches.forEach((match) => {
-      if (match.score1 === null || match.score2 === null) return;
-      const home = table[match.team1] || (table[match.team1] = initStanding(match.team1));
-      const away = table[match.team2] || (table[match.team2] = initStanding(match.team2));
-      const hs = match.score1;
-      const as = match.score2;
-      home.played += 1; away.played += 1;
-      home.gf += hs; home.ga += as; away.gf += as; away.ga += hs;
-      if (hs > as) { home.won += 1; home.pts += 3; away.lost += 1; }
-      else if (hs < as) { away.won += 1; away.pts += 3; home.lost += 1; }
-      else { home.drawn += 1; away.drawn += 1; home.pts += 1; away.pts += 1; }
-    });
-
-    const rows = Object.values(table).map((row) => ({ ...row, gd: row.gf - row.ga }));
-    rows.sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf || a.name.localeCompare(b.name, "ar"));
-    return rows;
-  }
-
-  async function loadGroupPage() {
-    clearError();
-    try {
-      const res = await fetch("data/matches.csv", { cache: "no-store" });
-      if (!res.ok) throw new Error("تعذر تحميل data/matches.csv");
-      const text = await res.text();
-      const rows = parseCSV(text);
-      if (!rows.length) throw new Error("ملف matches.csv فارغ");
-
-      const idx = buildHeaderIndex(rows[0]);
-      const required = ["group", "team1", "team2", "score1", "score2", "date", "time"];
-      const missing = required.filter((key) => idx[key] === undefined);
-      if (missing.length) throw new Error("أعمدة ناقصة في matches.csv: " + missing.join(", "));
-
-      const groupMatches = [];
-      const teamsSet = new Set();
-
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        const groupCode = String(getCell(row, idx, "group") || "").trim().toUpperCase();
-        if (groupCode !== currentGroup) continue;
-
-        const team1 = String(getCell(row, idx, "team1") || "").trim();
-        const team2 = String(getCell(row, idx, "team2") || "").trim();
-        if (!team1 || !team2) continue;
-
-        teamsSet.add(team1);
-        teamsSet.add(team2);
-
-        groupMatches.push({
-          date: String(getCell(row, idx, "date") || "").trim(),
-          time: String(getCell(row, idx, "time") || "").trim(),
-          team1,
-          team2,
-          score1: parseScore(getCell(row, idx, "score1")),
-          score2: parseScore(getCell(row, idx, "score2"))
-        });
-      }
-
-      grpBadge.textContent = String(teamsSet.size);
-      renderStandings(calculateStandings(Array.from(teamsSet), groupMatches));
-      renderMatches(groupMatches);
-    } catch (error) {
-      console.error("Group page error:", error);
-      showError("تعذر تحميل بيانات المجموعة من ملف matches.csv.");
-      renderStandings([]);
-      renderMatches([]);
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", loadGroupPage);
-})();
+  CupApp.initGroup();
 </script>
-<script>if ("serviceWorker" in navigator) { window.addEventListener("load", function () { navigator.serviceWorker.register("service-worker.js").then(function () { console.log("PWA ready"); }).catch(function (err) { console.error("SW registration failed:", err); }); }); }</script>
-</body></html>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(function () { console.log("PWA ready"); })
+        .catch(function (err) { console.error("SW registration failed:", err); });
+    });
+  }
+</script>
+</body>
+</html>
