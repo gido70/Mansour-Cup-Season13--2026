@@ -224,57 +224,58 @@
 <script src="config.js"></script>
 <script>
 async function loadStageMatches() {
-  const stageCode = "TP";
-  const title = "الثالث والرابع";
+  const stageCode = 'TP';
+  const title = 'الثالث والرابع';
+  const stageCandidates = ['TP', 'Third Place', 'الثالث والرابع'];
   const container = document.getElementById("matches-container");
 
-  const { data: teams, error: teamsError } = await supabaseClient
-    .from("teams")
-    .select("id,name");
+  try {
+    const { data: teams, error: teamsError } = await supabaseClient
+      .from("teams")
+      .select("id,name");
+    if (teamsError) throw teamsError;
 
-  if (teamsError) {
-    console.error("خطأ في جلب الفرق:", teamsError);
-    container.innerHTML = '<div class="empty-box">حدث خطأ في جلب الفرق.</div>';
-    return;
-  }
+    const teamMap = Object.fromEntries((teams || []).map(team => [team.id, team.name]));
 
-  const teamMap = {};
-  teams.forEach(team => {
-    teamMap[team.id] = team.name;
-  });
+    const { data: matches, error: matchesError } = await supabaseClient
+      .from("matches")
+      .select("id,stage,round_name,match_number,match_date,kickoff_time,home_score,away_score,home_team_id,away_team_id")
+      .order("match_date", { ascending: true })
+      .order("kickoff_time", { ascending: true })
+      .order("match_number", { ascending: true });
+    if (matchesError) throw matchesError;
 
-  const { data: matches, error: matchesError } = await supabaseClient
-    .from("matches")
-    .select("match_code,match_date,match_time,home_score,away_score,home_team_id,away_team_id")
-    .eq("group_code", stageCode)
-    .order("match_date", { ascending: true })
-    .order("match_time", { ascending: true });
+    const stageMatches = (matches || []).filter(match => {
+      const values = [match.stage, match.round_name].filter(Boolean).map(v => String(v).trim());
+      return values.some(v => stageCandidates.includes(v));
+    });
 
-  if (matchesError) {
-    console.error("خطأ في جلب المباريات:", matchesError);
+    if (!stageMatches.length) {
+      container.innerHTML = '<div class="empty-box">لا توجد مباريات مسجلة لهذا الدور حالياً.</div>';
+      return;
+    }
+
+    container.innerHTML = stageMatches.map(match => `
+      <article class="match-card">
+        <div class="match-meta">
+          <div class="match-code">${match.match_number ? `مباراة ${match.match_number}` : (match.round_name || match.stage || '')}</div>
+          <div class="match-time">${match.kickoff_time || ''}</div>
+          <div class="match-date">${match.match_date || ''}</div>
+        </div>
+        <div class="match-main">
+          <div class="team-name team-right">${teamMap[match.home_team_id] || '—'}</div>
+          <div class="score-box">${match.home_score} : ${match.away_score}</div>
+          <div class="team-name team-left">${teamMap[match.away_team_id] || '—'}</div>
+        </div>
+        <div class="match-links" style="margin-top:12px;text-align:center;">
+          <a href="match.html?id=${encodeURIComponent(match.id)}" class="btn">تفاصيل</a>
+        </div>
+      </article>
+    `).join('');
+  } catch (error) {
+    console.error('Knockout page error:', error);
     container.innerHTML = '<div class="empty-box">حدث خطأ في جلب مباريات ' + title + '.</div>';
-    return;
   }
-
-  if (!matches || !matches.length) {
-    container.innerHTML = '<div class="empty-box">لا توجد مباريات مسجلة لهذا الدور حالياً.</div>';
-    return;
-  }
-
-  container.innerHTML = matches.map(match => `
-    <article class="match-card">
-      <div class="match-meta">
-        <div class="match-code">${match.match_code || ''}</div>
-        <div class="match-time">${match.match_time || ''}</div>
-        <div class="match-date">${match.match_date || ''}</div>
-      </div>
-      <div class="match-main">
-        <div class="team-name team-right">${teamMap[match.home_team_id] || '—'}</div>
-        <div class="score-box">${match.home_score} : ${match.away_score}</div>
-        <div class="team-name team-left">${teamMap[match.away_team_id] || '—'}</div>
-      </div>
-    </article>
-  `).join('');
 }
 
 document.addEventListener("DOMContentLoaded", loadStageMatches);

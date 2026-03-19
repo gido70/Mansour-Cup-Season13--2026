@@ -141,9 +141,8 @@
       return;
     }
 
-    rows.forEach((row, index) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
+    tbody.innerHTML = rows.map((row, index) => `
+      <tr>
         <td>${index + 1}</td>
         <td>${row.name}</td>
         <td>${row.played}</td>
@@ -154,63 +153,55 @@
         <td>${row.ga}</td>
         <td>${row.gd}</td>
         <td>${row.pts}</td>
-      `;
-      tbody.appendChild(tr);
-    });
+      </tr>
+    `).join("");
   }
 
   function renderMatches(matches) {
-    matchesByRound.innerHTML = "";
-
+    matchesCount.textContent = String(matches.length);
     if (!matches.length) {
       matchesByRound.innerHTML = '<div class="empty-box">لا توجد مباريات مسجلة لهذه المجموعة حالياً.</div>';
-      matchesCount.textContent = "0";
       return;
     }
 
-    matchesCount.textContent = String(matches.length);
-
-    matches.forEach((match) => {
-      const card = document.createElement("div");
-      card.className = "match-card";
-
-      const dateText = [match.match_date || "", match.match_time || ""].filter(Boolean).join(" - ");
-      const stageText = match.stage || "مباراة";
-      const homeName = match.home_team?.name || "فريق";
-      const awayName = match.away_team?.name || "فريق";
-      const homeScore = Number.isInteger(match.home_score) ? match.home_score : 0;
-      const awayScore = Number.isInteger(match.away_score) ? match.away_score : 0;
-
-      card.innerHTML = `
-        <div class="match-head">
-          <div class="match-stage">${stageText}</div>
-          <div class="match-date">${dateText || "بدون تاريخ"}</div>
-        </div>
-        <div class="match-row">
-          <div class="match-teams">${homeName} × ${awayName}</div>
-          <div class="match-score">${homeScore} - ${awayScore}</div>
-        </div>
+    const cards = matches.map((match) => {
+      const homeName = match.home_team?.name || "—";
+      const awayName = match.away_team?.name || "—";
+      return `
+        <article class="match-card">
+          <div class="match-head">
+            <div class="match-stage">${match.round_name || match.stage || 'مباراة مجموعة'}</div>
+            <div class="match-date">${match.match_date || ''} ${match.kickoff_time || ''}</div>
+          </div>
+          <div class="match-row">
+            <div class="match-teams">${homeName}</div>
+            <div class="match-score">${match.home_score} : ${match.away_score}</div>
+            <div class="match-teams">${awayName}</div>
+          </div>
+          <div style="margin-top:12px;text-align:center;">
+            <a href="match.html?id=${encodeURIComponent(match.id)}" class="btn">تفاصيل</a>
+          </div>
+        </article>
       `;
-      matchesByRound.appendChild(card);
-    });
+    }).join("");
+
+    matchesByRound.innerHTML = cards;
   }
 
   function calculateStandings(teams, matches) {
-    const table = {};
-    teams.forEach((team) => {
-      table[team.id] = initStanding(team);
-    });
+    const table = Object.fromEntries(teams.map((team) => [team.id, initStanding(team)]));
 
     matches.forEach((match) => {
-      const home = match.home_team;
-      const away = match.away_team;
-      if (!home || !away || !table[home.id] || !table[away.id]) return;
+      const homeId = match.home_team?.id;
+      const awayId = match.away_team?.id;
+      if (!homeId || !awayId) return;
 
-      const hs = Number.isFinite(match.home_score) ? match.home_score : 0;
-      const as = Number.isFinite(match.away_score) ? match.away_score : 0;
+      const h = table[homeId];
+      const a = table[awayId];
+      if (!h || !a) return;
 
-      const h = table[home.id];
-      const a = table[away.id];
+      const hs = Number(match.home_score || 0);
+      const as = Number(match.away_score || 0);
 
       h.played += 1;
       a.played += 1;
@@ -235,32 +226,35 @@
       }
     });
 
-    const rows = Object.values(table).map((row) => ({
-      ...row,
-      gd: row.gf - row.ga
-    }));
-
-    rows.sort((a, b) =>
-      b.pts - a.pts ||
-      b.gd - a.gd ||
-      b.gf - a.gf ||
-      a.name.localeCompare(b.name, "ar")
-    );
-
+    const rows = Object.values(table).map((row) => ({ ...row, gd: row.gf - row.ga }));
+    rows.sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf || a.name.localeCompare(b.name, "ar"));
     return rows;
   }
 
   async function loadGroupPage() {
     clearError();
-
     try {
-      const { data: teams, error: teamsError } = await supabaseClient
-        .from("teams")
-        .select("id, name, group")
-        .eq("group", currentGroup)
-        .order("name", { ascending: true });
+      const { data: seasons, error: seasonsError } = await supabaseClient
+        .from("seasons")
+        .select("id,is_active")
+        .order("is_active", { ascending: false })
+        .limit(1);
+      if (seasonsError) throw seasonsError;
+      const seasonId = seasons?.[0]?.id;
+      if (!seasonId) throw new Error("No season found");
 
-      if (teamsError) throw teamsError;
+      const { data: teamLinks, error: teamLinksError } = await supabaseClient
+        .from("team_seasons")
+        .select("team_id,group_name,teams(id,name)")
+        .eq("season_id", seasonId)
+        .eq("group_name", currentGroup)
+        .order("sort_order", { ascending: true });
+      if (teamLinksError) throw teamLinksError;
+
+      const teams = (teamLinks || []).map(link => ({
+        id: link.teams?.id || link.team_id,
+        name: link.teams?.name || "—"
+      }));
 
       grpBadge.textContent = String(teams.length);
 
@@ -269,26 +263,28 @@
         .select(`
           id,
           stage,
+          round_name,
           match_date,
-          match_time,
+          kickoff_time,
           home_score,
           away_score,
           home_team:home_team_id ( id, name ),
           away_team:away_team_id ( id, name )
         `)
+        .eq("season_id", seasonId)
+        .eq("stage", "Group Stage")
         .order("match_date", { ascending: true })
-        .order("match_time", { ascending: true });
-
+        .order("kickoff_time", { ascending: true });
       if (matchesError) throw matchesError;
 
-      const teamIds = new Set(teams.map((t) => t.id));
-      const groupMatches = (matches || []).filter((match) => {
+      const teamIds = new Set(teams.map(t => t.id));
+      const groupMatches = (matches || []).filter(match => {
         const homeId = match.home_team?.id;
         const awayId = match.away_team?.id;
         return teamIds.has(homeId) && teamIds.has(awayId);
       });
 
-      renderStandings(calculateStandings(teams || [], groupMatches));
+      renderStandings(calculateStandings(teams, groupMatches));
       renderMatches(groupMatches);
     } catch (error) {
       console.error("Group page error:", error);
